@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veteran Help — Medical Review of Systems</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --navy-light: #2C3E6B;
+    --gold: #C5A44E;
+    --gold-light: #D4BA72;
+    --gold-dim: #A8893A;
+    --cream: #FAF7F0;
+    --cream-dark: #F0EBE0;
+    --text-primary: #1B2A4A;
+    --text-secondary: #4A5568;
+    --text-muted: #718096;
+    --white: #FFFFFF;
+    --success: #2F855A;
+    --success-bg: #F0FFF4;
+    --danger: #C53030;
+    --danger-bg: #FFF5F5;
+    --border: #D2C9B8;
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 2px 12px rgba(27,42,74,0.08);
+    --section-bg: #F7F4ED;
+    --input-bg: #FFFFFF;
+    --input-border: #C7BDA8;
+    --overlay: rgba(27,42,74,0.5);
+    --badge-yes-bg: #2F855A;
+    --badge-no-bg: #718096;
+    --progress-track: #E2DDD2;
+    --hero-gradient: linear-gradient(135deg, #1B2A4A 0%, #2C3E6B 50%, #1B2A4A 100%);
+    --star-color: #C5A44E;
+  }
+
+  html.dark {
+    --navy: #0D1626;
+    --navy-light: #1A2744;
+    --gold: #D4BA72;
+    --gold-light: #E0CC8E;
+    --gold-dim: #B89D4F;
+    --cream: #111827;
+    --cream-dark: #0D1117;
+    --text-primary: #E2E8F0;
+    --text-secondary: #A0AEC0;
+    --text-muted: #718096;
+    --white: #1A202C;
+    --success: #68D391;
+    --success-bg: rgba(47,133,90,0.15);
+    --danger: #FC8181;
+    --danger-bg: rgba(197,48,48,0.15);
+    --border: #2D3748;
+    --card-bg: #1A202C;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    --section-bg: #151D2E;
+    --input-bg: #2D3748;
+    --input-border: #4A5568;
+    --overlay: rgba(0,0,0,0.7);
+    --badge-yes-bg: #276749;
+    --badge-no-bg: #4A5568;
+    --progress-track: #2D3748;
+    --hero-gradient: linear-gradient(135deg, #0D1626 0%, #1A2744 50%, #0D1626 100%);
+    --star-color: #D4BA72;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans Pro', -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Hero Header */
+  .hero {
+    background: var(--hero-gradient);
+    color: #FFFFFF;
+    padding: 2rem 1.25rem 1.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(197,164,78,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-stars i {
+    color: var(--star-color);
+    font-size: 1rem;
+    animation: starPulse 2s ease-in-out infinite;
+  }
+
+  .hero-stars i:nth-child(2) { animation-delay: 0.2s; }
+  .hero-stars i:nth-child(3) { animation-delay: 0.4s; }
+  .hero-stars i:nth-child(4) { animation-delay: 0.2s; }
+
+  @keyframes starPulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  .hero h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero h1 span { color: var(--gold); }
+
+  .hero p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    max-width: 500px;
+    margin: 0 auto;
+    font-weight: 400;
+  }
+
+  /* Client Info Section */
+  .client-info {
+    background: var(--card-bg);
+    max-width: 800px;
+    margin: 1.5rem auto 0;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border);
+  }
+
+  .client-info h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .client-info h2 i { color: var(--gold); }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .info-grid .full { grid-column: 1 / -1; }
+
+  .info-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  .info-field input, .info-field select {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .info-field input:focus, .info-field select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(197,164,78,0.2);
+  }
+
+  /* Progress Bar */
+  .progress-wrapper {
+    max-width: 800px;
+    margin: 1.25rem auto 0;
+    padding: 0 1.25rem;
+  }
+
+  .progress-bar-container {
+    background: var(--progress-track);
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-light));
+    border-radius: 20px;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .progress-text {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+  }
+
+  /* Main Content */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem 1.25rem 6rem;
+  }
+
+  /* Section Cards */
+  .section-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-top: 1.25rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    animation: cardIn 0.4s ease-out both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .section-header:hover { background: var(--section-bg); }
+
+  .section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #FFFFFF;
+    flex-shrink: 0;
+  }
+
+  .section-header-text { flex: 1; }
+
+  .section-header-text h3 {
+    font-family: 'Merriweather', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .section-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .section-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .section-chevron {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+    margin-left: 0.5rem;
+  }
+
+  .section-card.open .section-chevron { transform: rotate(180deg); }
+
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .section-card.open .section-body { max-height: 3000px; }
+
+  .section-body-inner {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  /* Condition Rows */
+  .condition-row {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 0.75rem;
+    min-height: 48px;
+  }
+
+  .condition-row:last-child { border-bottom: none; }
+
+  .condition-name {
+    flex: 1;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    line-height: 1.35;
+  }
+
+  .condition-name small {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .toggle-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .toggle-btn {
+    border: 2px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 44px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toggle-btn:hover { border-color: var(--gold); }
+
+  .toggle-btn.yes-active {
+    background: var(--success);
+    border-color: var(--success);
+    color: #FFFFFF;
+  }
+
+  .toggle-btn.no-active {
+    background: var(--badge-no-bg);
+    border-color: var(--badge-no-bg);
+    color: #FFFFFF;
+  }
+
+  /* Other Text Input */
+  .other-row {
+    padding: 0.6rem 0;
+  }
+
+  .other-row label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .other-row input {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .other-row input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(197,164,78,0.2);
+  }
+
+  .other-row input::placeholder { color: var(--text-muted); }
+
+  /* Section Icon Colors */
+  .icon-vision { background: #3182CE; }
+  .icon-ent { background: #805AD5; }
+  .icon-pulmonary { background: #319795; }
+  .icon-cardio { background: #E53E3E; }
+  .icon-skin { background: #D69E2E; }
+  .icon-gastro { background: #DD6B20; }
+  .icon-musculo { background: #38A169; }
+  .icon-genito { background: #3182CE; }
+  .icon-hema { background: #B83280; }
+  .icon-endocrine { background: #6B46C1; }
+  .icon-neuro { background: #2B6CB0; }
+  .icon-psych { background: #9B2C2C; }
+
+  /* Bottom Buttons */
+  .bottom-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+  }
+
+  .btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    color: var(--navy);
+    box-shadow: 0 2px 8px rgba(197,164,78,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(197,164,78,0.4);
+  }
+
+  .btn-secondary {
+    background: var(--section-bg);
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-secondary:hover { background: var(--cream-dark); }
+
+  .btn-danger {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1.5px solid var(--danger);
+  }
+
+  .btn-danger:hover { opacity: 0.85; }
+
+  /* Summary Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal-overlay.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal {
+    background: var(--card-bg);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    animation: modalSlide 0.3s ease;
+  }
+
+  @keyframes modalSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .modal-header h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+  }
+
+  .modal-close:hover { color: var(--text-primary); }
+
+  .modal-body {
+    padding: 1.25rem 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .summary-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .summary-section h3 {
+    font-family: 'Merriweather', serif;
+    font-size: 0.95rem;
+    color: var(--gold-dim);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .summary-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .summary-list li {
+    font-size: 0.88rem;
+    padding: 0.25rem 0;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .summary-list li i {
+    font-size: 0.7rem;
+    color: var(--success);
+  }
+
+  .summary-empty {
+    font-size: 0.88rem;
+    font-style: italic;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+  }
+
+  .modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+
+  /* Confirm Modal */
+  .confirm-modal-body {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .confirm-modal-body p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+  }
+
+  .confirm-modal-body .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.35rem; }
+    .info-grid { grid-template-columns: 1fr; }
+    .condition-name { font-size: 0.86rem; }
+    .toggle-btn { padding: 0.25rem 0.65rem; font-size: 0.72rem; }
+    .bottom-actions { padding: 0.6rem 0.75rem; }
+    .btn { padding: 0.6rem 1rem; font-size: 0.82rem; }
+  }
+
+  /* Print styles for download */
+  @media print {
+    .bottom-actions, .modal-overlay { display: none !important; }
+    .section-body { max-height: none !important; }
+    .section-card { break-inside: avoid; }
+  }
+
+  /* Notification Toast */
+  .toast {
+    position: fixed;
+    bottom: 5.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--navy);
+    color: #FFFFFF;
+    padding: 0.7rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 600;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-stars">
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+    <i class="fas fa-star"></i>
+  </div>
+  <h1><span>Veteran Help</span></h1>
+  <p>Medical Review of Systems — Condition Identification</p>
+</div>
+
+<!-- Client Info -->
+<div class="client-info">
+  <h2><i class="fas fa-user-shield"></i> Client Information</h2>
+  <div class="info-grid">
+    <div class="info-field">
+      <label for="clientName">Full Name</label>
+      <input type="text" id="clientName" placeholder="e.g. John A. Smith">
+    </div>
+    <div class="info-field">
+      <label for="clientDOB">Date of Birth</label>
+      <input type="date" id="clientDOB">
+    </div>
+    <div class="info-field">
+      <label for="clientBranch">Branch of Service</label>
+      <select id="clientBranch">
+        <option value="">Select branch…</option>
+        <option>Army</option>
+        <option>Navy</option>
+        <option>Air Force</option>
+        <option>Marine Corps</option>
+        <option>Coast Guard</option>
+        <option>Space Force</option>
+        <option>National Guard</option>
+      </select>
+    </div>
+    <div class="info-field">
+      <label for="clientPhone">Phone Number</label>
+      <input type="tel" id="clientPhone" placeholder="(555) 555-5555">
+    </div>
+    <div class="info-field full">
+      <label for="clientNotes">Additional Notes</label>
+      <input type="text" id="clientNotes" placeholder="Any prior claims, special circumstances, etc.">
+    </div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-wrapper">
+  <div class="progress-bar-container">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-text" id="progressText">0 of 0 conditions answered</div>
+</div>
+
+<!-- Sections Container -->
+<div class="container" id="sectionsContainer"></div>
+
+<!-- Bottom Buttons -->
+<div class="bottom-actions">
+  <button class="btn btn-secondary" onclick="handleClearAll()"><i class="fas fa-eraser"></i> Clear</button>
+  <button class="btn btn-primary" onclick="showSummary()"><i class="fas fa-clipboard-list"></i> Review &amp; Export</button>
+</div>
+
+<!-- Summary Modal -->
+<div class="modal-overlay" id="summaryModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2><i class="fas fa-clipboard-list"></i> Conditions Summary</h2>
+      <button class="modal-close" onclick="closeSummary()">&times;</button>
+    </div>
+    <div class="modal-body" id="summaryBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeSummary()">Close</button>
+      <button class="btn btn-primary" onclick="downloadSummary()"><i class="fas fa-download"></i> Download</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width: 400px;">
+    <div class="confirm-modal-body">
+      <p id="confirmMessage"></p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="closeConfirm()">Cancel</button>
+        <button class="btn btn-danger" id="confirmAction">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   Dark Mode Detection
+   ============================================================ */
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(event) {
+  if (event.matches) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+});
+
+/* ============================================================
+   Data: All sections & conditions
+   ============================================================ */
+var SECTIONS = [
+  {
+    id: 'vision',
+    title: 'Vision',
+    icon: 'fas fa-eye',
+    iconClass: 'icon-vision',
+    conditions: [
+      { id: 'dry_eyes', name: 'Dry Eyes' },
+      { id: 'complete_loss_vision', name: 'Complete Loss of Vision' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'ent',
+    title: 'Ear, Nose, Sinuses, Mouth & Throat',
+    icon: 'fas fa-head-side-cough',
+    iconClass: 'icon-ent',
+    conditions: [
+      { id: 'hearing_loss', name: 'Hearing Loss' },
+      { id: 'tinnitus', name: 'Tinnitus / Ringing in the Ears' },
+      { id: 'sinusitis', name: 'Sinusitis', sub: 'Symptoms: facial pressure/pain, nasal stuffiness' },
+      { id: 'allergic_rhinitis', name: 'Allergic Rhinitis', sub: 'Symptoms: sneezing, runny nose, itchy/watery eyes' },
+      { id: 'teeth_grinding', name: 'Teeth Grinding (Bruxism)' },
+      { id: 'dizziness', name: 'Dizziness' },
+      { id: 'deviated_septum', name: 'Deviated Septum' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'pulmonary',
+    title: 'Pulmonary',
+    icon: 'fas fa-lungs',
+    iconClass: 'icon-pulmonary',
+    conditions: [
+      { id: 'shortness_of_breath', name: 'Shortness of Breath' },
+      { id: 'asthma', name: 'Asthma' },
+      { id: 'copd', name: 'Chronic Obstructive Pulmonary Disease (COPD)' },
+      { id: 'obstructive_sleep_apnea', name: 'Obstructive Sleep Apnea' },
+      { id: 'snoring', name: 'Snoring' },
+      { id: 'central_sleep_apnea', name: 'Central Sleep Apnea' },
+      { id: 'asbestos_lung', name: 'Lung Condition due to Asbestos Exposure' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'cardiovascular',
+    title: 'Cardiovascular',
+    icon: 'fas fa-heartbeat',
+    iconClass: 'icon-cardio',
+    conditions: [
+      { id: 'heart_attack', name: 'Heart Attack' },
+      { id: 'pacemaker', name: 'Pacemaker' },
+      { id: 'high_blood_pressure', name: 'High Blood Pressure (Hypertension)' },
+      { id: 'irregular_heart_rhythm', name: 'Irregular Heart Rhythm (Arrhythmia)' },
+      { id: 'congestive_heart_failure', name: 'Congestive Heart Failure' },
+      { id: 'hypertensive_heart_disease', name: 'Hypertensive Heart Disease' },
+      { id: 'ischemic_heart_disease', name: 'Ischemic Heart Disease' },
+      { id: 'raynauds_syndrome', name: "Raynaud's Syndrome" },
+      { id: 'varicose_veins', name: 'Varicose Veins' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'skin',
+    title: 'Skin',
+    icon: 'fas fa-hand-dots',
+    iconClass: 'icon-skin',
+    conditions: [
+      { id: 'acne', name: 'Acne' },
+      { id: 'herpes', name: 'Herpes' },
+      { id: 'pseudofolliculitis', name: 'Shaving Bumps / Pseudofolliculitis Barbae' },
+      { id: 'scars_head_face_neck', name: 'Scars on Head / Face / Neck' },
+      { id: 'painful_scars', name: 'Painful Scars' },
+      { id: 'eczema', name: 'Eczema' },
+      { id: 'dermatitis', name: 'Dermatitis' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'gastrointestinal',
+    title: 'Gastrointestinal',
+    icon: 'fas fa-stomach',
+    iconClass: 'icon-gastro',
+    conditions: [
+      { id: 'heartburn_acid_reflux', name: 'Heartburn or Acid Reflux (GERD)' },
+      { id: 'diarrhea_constipation_ibs', name: 'Diarrhea / Constipation / IBS' },
+      { id: 'hemorrhoids', name: 'Hemorrhoids' },
+      { id: 'esophageal_stricture', name: 'Esophageal Stricture' },
+      { id: 'gastroenteritis_colitis', name: 'Gastroenteritis and Colitis' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'musculoskeletal',
+    title: 'Musculoskeletal',
+    icon: 'fas fa-bone',
+    iconClass: 'icon-musculo',
+    conditions: [
+      { id: 'neck_pain', name: 'Neck Pain' },
+      { id: 'shoulder_pain', name: 'Shoulder Pain' },
+      { id: 'back_pain', name: 'Back Pain' },
+      { id: 'elbow_pain', name: 'Elbow Pain' },
+      { id: 'wrist_pain', name: 'Wrist Pain' },
+      { id: 'carpal_tunnel', name: 'Carpal Tunnel Syndrome' },
+      { id: 'hand_pain', name: 'Hand Pain' },
+      { id: 'finger_pain', name: 'Finger Pain' },
+      { id: 'hip_pain', name: 'Hip Pain' },
+      { id: 'hip_replacement', name: 'Hip Replacement' },
+      { id: 'knee_pain', name: 'Knee Pain' },
+      { id: 'knee_replacement', name: 'Knee Replacement' },
+      { id: 'shin_splints', name: 'Shin Splints' },
+      { id: 'ankle_pain', name: 'Ankle Pain' },
+      { id: 'great_toe_pain', name: 'Great (Big) Toe Pain' },
+      { id: 'foot_pain', name: 'Foot Pain' },
+      { id: 'pes_planus', name: 'Pes Planus (Flat Feet)' },
+      { id: 'plantar_fasciitis', name: 'Plantar Fasciitis' },
+      { id: 'hallux_valgus', name: 'Hallux Valgus (Bunion)' },
+      { id: 'gout', name: 'Gout' },
+      { id: 'joint_replacement', name: 'Any Joint Replacement' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'genitourinary',
+    title: 'Genitourinary',
+    icon: 'fas fa-droplet',
+    iconClass: 'icon-genito',
+    conditions: [
+      { id: 'frequent_urination', name: 'Frequent Urination' },
+      { id: 'bladder_leakage', name: 'Bladder Leakage (Incontinence)' },
+      { id: 'sexual_arousal_disorder', name: 'Sexual Arousal Disorder' },
+      { id: 'kidney_stones', name: 'Kidney Stones' },
+      { id: 'chronic_kidney_disease', name: 'Chronic Kidney Disease' },
+      { id: 'gynecological_conditions', name: 'Other Gynecological Conditions' },
+      { id: 'reproductive_cancer', name: 'Reproductive Cancer' },
+      { id: 'erectile_dysfunction', name: 'Erectile Dysfunction' },
+      { id: 'varicocele', name: 'Varicocele' },
+      { id: 'prostate_cancer', name: 'Prostate Cancer' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'hematologic',
+    title: 'Hematologic, Lymphatic, Immune & Infectious Disease',
+    icon: 'fas fa-shield-virus',
+    iconClass: 'icon-hema',
+    conditions: [
+      { id: 'peripheral_edema', name: 'Peripheral Edema' },
+      { id: 'chronic_fatigue', name: 'Chronic Fatigue Syndrome' },
+      { id: 'fibromyalgia', name: 'Fibromyalgia' },
+      { id: 'anemia', name: 'Anemia' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'endocrine',
+    title: 'Endocrine',
+    icon: 'fas fa-disease',
+    iconClass: 'icon-endocrine',
+    conditions: [
+      { id: 'diabetes_type2', name: 'Diabetes Mellitus, Type 2' },
+      { id: 'hypothyroidism', name: 'Hypothyroidism' },
+      { id: 'hyperthyroidism', name: 'Hyperthyroidism' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'neurological',
+    title: 'Neurological',
+    icon: 'fas fa-brain',
+    iconClass: 'icon-neuro',
+    conditions: [
+      { id: 'headaches_migraines', name: 'Chronic Headaches or Migraines' },
+      { id: 'seizures', name: 'Seizures' },
+      { id: 'numbness_upper', name: 'Numbness or Tingling in Upper Extremities' },
+      { id: 'numbness_lower', name: 'Numbness or Tingling in Lower Extremities' },
+      { id: 'tremors', name: 'Tremors' },
+      { id: 'pinched_nerve', name: 'Pinched Nerve' },
+      { id: 'pain_weakness_upper', name: 'Pain or Weakness in Upper Extremities' },
+      { id: 'pain_weakness_lower', name: 'Pain or Weakness in Lower Extremities' },
+      { id: 'loss_consciousness_head_trauma', name: 'Loss of Consciousness due to Head Trauma' },
+      { id: 'restless_legs', name: 'Restless Legs' },
+      { id: 'stroke_cva', name: 'Stroke or CVA' },
+    ],
+    hasOther: true
+  },
+  {
+    id: 'psychological',
+    title: 'Psychological',
+    icon: 'fas fa-comments',
+    iconClass: 'icon-psych',
+    conditions: [
+      { id: 'ptsd', name: 'Post-Traumatic Stress Disorder (PTSD)' },
+      { id: 'insomnia', name: 'Insomnia / Trouble Falling or Staying Asleep' },
+      { id: 'depression', name: 'Depression' },
+      { id: 'anxiety', name: 'Anxiety' },
+      { id: 'adjustment_disorder', name: 'Adjustment Disorder' },
+    ],
+    hasOther: true
+  }
+];
+
+/* ============================================================
+   State
+   ============================================================ */
+var answers = {};
+var otherTexts = {};
+var totalConditions = 0;
+
+/* ============================================================
+   Render sections
+   ============================================================ */
+function renderSections() {
+  var container = document.getElementById('sectionsContainer');
+  var html = '';
+
+  SECTIONS.forEach(function(section, sIndex) {
+    var condCount = section.conditions.length;
+    totalConditions += condCount;
+
+    html += '<div class="section-card' + (sIndex === 0 ? ' open' : '') + '" data-section="' + section.id + '">';
+    html += '<div class="section-header" onclick="toggleSection(this)">';
+    html += '<div class="section-icon ' + section.iconClass + '"><i class="' + section.icon + '"></i></div>';
+    html += '<div class="section-header-text">';
+    html += '<h3>' + section.title + '</h3>';
+    html += '<span class="section-count" id="count_' + section.id + '">0 of ' + condCount + ' answered</span>';
+    html += '</div>';
+    html += '<span class="section-badge" id="badge_' + section.id + '" style="display:none">0 Yes</span>';
+    html += '<i class="fas fa-chevron-down section-chevron"></i>';
+    html += '</div>';
+    html += '<div class="section-body"><div class="section-body-inner">';
+
+    section.conditions.forEach(function(cond) {
+      html += '<div class="condition-row">';
+      html += '<div class="condition-name">' + cond.name;
+      if (cond.sub) {
+        html += '<small>' + cond.sub + '</small>';
+      }
+      html += '</div>';
+      html += '<div class="toggle-group">';
+      html += '<button class="toggle-btn" data-cond="' + cond.id + '" data-val="yes" onclick="setAnswer(\'' + cond.id + '\',\'yes\',this)">Yes</button>';
+      html += '<button class="toggle-btn" data-cond="' + cond.id + '" data-val="no" onclick="setAnswer(\'' + cond.id + '\',\'no\',this)">No</button>';
+      html += '</div>';
+      html += '</div>';
+    });
+
+    if (section.hasOther) {
+      html += '<div class="other-row">';
+      html += '<label>Other conditions not listed above:</label>';
+      html += '<input type="text" id="other_' + section.id + '" placeholder="Describe any additional conditions…" oninput="setOther(\'' + section.id + '\', this.value)">';
+      html += '</div>';
+    }
+
+    html += '</div></div></div>';
+  });
+
+  container.innerHTML = html;
+  updateProgress();
+}
+
+/* ============================================================
+   Interactions
+   ============================================================ */
+function toggleSection(headerEl) {
+  var card = headerEl.closest('.section-card');
+  card.classList.toggle('open');
+}
+
+function setAnswer(condId, value, btnEl) {
+  var currentVal = answers[condId];
+
+  if (currentVal === value) {
+    delete answers[condId];
+    btnEl.classList.remove('yes-active', 'no-active');
+  } else {
+    answers[condId] = value;
+    var group = btnEl.parentNode;
+    var buttons = group.querySelectorAll('.toggle-btn');
+    buttons.forEach(function(b) { b.classList.remove('yes-active', 'no-active'); });
+    btnEl.classList.add(value === 'yes' ? 'yes-active' : 'no-active');
+  }
+
+  updateSectionCounts();
+  updateProgress();
+}
+
+function setOther(sectionId, value) {
+  otherTexts[sectionId] = value.trim();
+}
+
+function updateSectionCounts() {
+  SECTIONS.forEach(function(section) {
+    var answered = 0;
+    var yesCount = 0;
+    section.conditions.forEach(function(cond) {
+      if (answers[cond.id]) {
+        answered++;
+        if (answers[cond.id] === 'yes') yesCount++;
+      }
+    });
+    var countEl = document.getElementById('count_' + section.id);
+    var badgeEl = document.getElementById('badge_' + section.id);
+    if (countEl) countEl.textContent = answered + ' of ' + section.conditions.length + ' answered';
+    if (badgeEl) {
+      if (yesCount > 0) {
+        badgeEl.style.display = '';
+        badgeEl.textContent = yesCount + ' Yes';
+      } else {
+        badgeEl.style.display = 'none';
+      }
+    }
+  });
+}
+
+function updateProgress() {
+  var answeredCount = Object.keys(answers).length;
+  var pct = totalConditions > 0 ? Math.round((answeredCount / totalConditions) * 100) : 0;
+  var fill = document.getElementById('progressFill');
+  var text = document.getElementById('progressText');
+  if (fill) fill.style.width = pct + '%';
+  if (text) text.textContent = answeredCount + ' of ' + totalConditions + ' conditions answered (' + pct + '%)';
+}
+
+/* ============================================================
+   Clear All (with custom confirm)
+   ============================================================ */
+function handleClearAll() {
+  showConfirmDialog('Are you sure you want to clear all responses? This cannot be undone.', function() {
+    answers = {};
+    otherTexts = {};
+    document.querySelectorAll('.toggle-btn').forEach(function(b) {
+      b.classList.remove('yes-active', 'no-active');
+    });
+    SECTIONS.forEach(function(section) {
+      var otherInput = document.getElementById('other_' + section.id);
+      if (otherInput) otherInput.value = '';
+    });
+    document.getElementById('clientName').value = '';
+    document.getElementById('clientDOB').value = '';
+    document.getElementById('clientBranch').value = '';
+    document.getElementById('clientPhone').value = '';
+    document.getElementById('clientNotes').value = '';
+    updateSectionCounts();
+    updateProgress();
+    showToast('All responses cleared');
+  });
+}
+
+/* ============================================================
+   Custom Confirm Dialog
+   ============================================================ */
+function showConfirmDialog(message, onConfirm) {
+  var overlay = document.getElementById('confirmModal');
+  var msgEl = document.getElementById('confirmMessage');
+  var actionBtn = document.getElementById('confirmAction');
+  msgEl.textContent = message;
+  overlay.classList.add('active');
+
+  var newBtn = actionBtn.cloneNode(true);
+  actionBtn.parentNode.replaceChild(newBtn, actionBtn);
+  newBtn.id = 'confirmAction';
+  newBtn.addEventListener('click', function() {
+    overlay.classList.remove('active');
+    onConfirm();
+  });
+}
+
+function closeConfirm() {
+  document.getElementById('confirmModal').classList.remove('active');
+}
+
+/* ============================================================
+   Toast notification
+   ============================================================ */
+function showToast(msg) {
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 2500);
+}
+
+/* ============================================================
+   Summary
+   ============================================================ */
+function showSummary() {
+  var body = document.getElementById('summaryBody');
+  var html = '';
+
+  var clientName = document.getElementById('clientName').value.trim();
+  var clientDOB = document.getElementById('clientDOB').value;
+  var clientBranch = document.getElementById('clientBranch').value;
+  var clientPhone = document.getElementById('clientPhone').value.trim();
+  var clientNotes = document.getElementById('clientNotes').value.trim();
+
+  if (clientName || clientDOB || clientBranch || clientPhone) {
+    html += '<div class="summary-section">';
+    html += '<h3><i class="fas fa-user"></i> Client Info</h3>';
+    html += '<ul class="summary-list">';
+    if (clientName) html += '<li><i class="fas fa-circle"></i> <strong>Name:</strong>&nbsp;' + escapeHtml(clientName) + '</li>';
+    if (clientDOB) html += '<li><i class="fas fa-circle"></i> <strong>DOB:</strong>&nbsp;' + clientDOB + '</li>';
+    if (clientBranch) html += '<li><i class="fas fa-circle"></i> <strong>Branch:</strong>&nbsp;' + escapeHtml(clientBranch) + '</li>';
+    if (clientPhone) html += '<li><i class="fas fa-circle"></i> <strong>Phone:</strong>&nbsp;' + escapeHtml(clientPhone) + '</li>';
+    if (clientNotes) html += '<li><i class="fas fa-circle"></i> <strong>Notes:</strong>&nbsp;' + escapeHtml(clientNotes) + '</li>';
+    html += '</ul></div>';
+  }
+
+  var totalYes = 0;
+  var totalAnswered = Object.keys(answers).length;
+
+  SECTIONS.forEach(function(section) {
+    var yesList = [];
+    var noList = [];
+    section.conditions.forEach(function(cond) {
+      if (answers[cond.id] === 'yes') yesList.push(cond.name);
+      if (answers[cond.id] === 'no') noList.push(cond.name);
+    });
+    var otherVal = otherTexts[section.id] || '';
+    totalYes += yesList.length;
+
+    html += '<div class="summary-section">';
+    html += '<h3><i class="fas fa-folder-open"></i> ' + section.title + '</h3>';
+
+    if (yesList.length === 0 && noList.length === 0 && !otherVal) {
+      html += '<p class="summary-empty">No conditions answered in this section.</p>';
+    } else {
+      if (yesList.length > 0) {
+        html += '<p style="font-size:0.82rem;font-weight:700;color:var(--success);margin-bottom:0.25rem;">✓ Reported Conditions (' + yesList.length + '):</p>';
+        html += '<ul class="summary-list">';
+        yesList.forEach(function(name) {
+          html += '<li><i class="fas fa-check"></i> ' + name + '</li>';
+        });
+        html += '</ul>';
+      }
+      if (noList.length > 0) {
+        html += '<p style="font-size:0.82rem;font-weight:700;color:var(--text-muted);margin-top:0.5rem;margin-bottom:0.25rem;">✗ Denied (' + noList.length + '):</p>';
+        html += '<ul class="summary-list" style="opacity:0.7">';
+        noList.forEach(function(name) {
+          html += '<li style="color:var(--text-muted)"><i class="fas fa-minus" style="color:var(--text-muted)"></i> ' + name + '</li>';
+        });
+        html += '</ul>';
+      }
+      if (otherVal) {
+        html += '<p style="font-size:0.82rem;font-weight:700;color:var(--gold-dim);margin-top:0.5rem;margin-bottom:0.25rem;">Other:</p>';
+        html += '<p style="font-size:0.88rem;color:var(--text-primary)">' + escapeHtml(otherVal) + '</p>';
+      }
+    }
+    html += '</div>';
+  });
+
+  html = '<div style="text-align:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">'
+    + '<strong style="font-size:1.1rem;color:var(--text-primary)">' + totalYes + ' conditions reported</strong>'
+    + '<span style="display:block;font-size:0.82rem;color:var(--text-muted)">' + totalAnswered + ' of ' + totalConditions + ' total answered</span>'
+    + '</div>' + html;
+
+  body.innerHTML = html;
+  document.getElementById('summaryModal').classList.add('active');
+}
+
+function closeSummary() {
+  document.getElementById('summaryModal').classList.remove('active');
+}
+
+function escapeHtml(text) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(text));
+  return div.innerHTML;
+}
+
+/* ============================================================
+   Download Summary as Text
+   ============================================================ */
+function downloadSummary() {
+  var lines = [];
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  var timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  lines.push('==========================================================');
+  lines.push('  VETERAN HELP — Medical Review of Systems');
+  lines.push('  Condition Identification Report');
+  lines.push('  Generated: ' + dateStr + ' at ' + timeStr);
+  lines.push('==========================================================');
+  lines.push('');
+
+  var clientName = document.getElementById('clientName').value.trim();
+  var clientDOB = document.getElementById('clientDOB').value;
+  var clientBranch = document.getElementById('clientBranch').value;
+  var clientPhone = document.getElementById('clientPhone').value.trim();
+  var clientNotes = document.getElementById('clientNotes').value.trim();
+
+  if (clientName || clientDOB || clientBranch || clientPhone) {
+    lines.push('CLIENT INFORMATION');
+    lines.push('----------------------------------------------------------');
+    if (clientName) lines.push('  Name:    ' + clientName);
+    if (clientDOB) lines.push('  DOB:     ' + clientDOB);
+    if (clientBranch) lines.push('  Branch:  ' + clientBranch);
+    if (clientPhone) lines.push('  Phone:   ' + clientPhone);
+    if (clientNotes) lines.push('  Notes:   ' + clientNotes);
+    lines.push('');
+  }
+
+  var totalYes = 0;
+  SECTIONS.forEach(function(section) {
+    section.conditions.forEach(function(cond) {
+      if (answers[cond.id] === 'yes') totalYes++;
+    });
+  });
+
+  lines.push('SUMMARY: ' + totalYes + ' condition(s) reported YES');
+  lines.push('         ' + Object.keys(answers).length + ' of ' + totalConditions + ' total answered');
+  lines.push('');
+
+  SECTIONS.forEach(function(section) {
+    lines.push('==========================================================');
+    lines.push('  ' + section.title.toUpperCase());
+    lines.push('==========================================================');
+
+    section.conditions.forEach(function(cond) {
+      var val = answers[cond.id];
+      var status = val === 'yes' ? '[YES]' : (val === 'no' ? '[ NO]' : '[   ]');
+      lines.push('  ' + status + '  ' + cond.name);
+    });
+
+    var otherVal = otherTexts[section.id] || '';
+    if (otherVal) {
+      lines.push('  [OTHER] ' + otherVal);
+    }
+    lines.push('');
+  });
+
+  lines.push('==========================================================');
+  lines.push('  END OF REPORT');
+  lines.push('==========================================================');
+
+  var content = lines.join('\n');
+  var blob = new Blob([content], { type: 'text/plain' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var safeName = (clientName || 'Client').replace(/[^a-zA-Z0-9]/g, '_');
+  a.href = url;
+  a.download = 'VeteranHelp_MedicalReview_' + safeName + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Report downloaded');
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+renderSections();
+</script>
+</body>
+</html>
